@@ -22,6 +22,6 @@ object Ops {
 
     implicit val toInt0: ToInt[_0] = () => 0
 
-    implicit def toIntSucc[N <: Nat](implicit toIntN : ToInt[N]): ToInt[Succ[N]] = () => toIntN()+1
+    implicit def toIntSucc[N <: Nat](implicit toIntN : ToInt[N]): ToInt[Succ[N]] = () => toIntN() + 1
   }
 }

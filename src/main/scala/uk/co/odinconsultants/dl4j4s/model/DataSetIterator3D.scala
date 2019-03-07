@@ -6,6 +6,6 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator
 
 class DataSetIterator3D[T : Numeric, X <: Nat, Y <: Nat, Z <: Nat](ds: DataSet3D[T, X, Y, Z]) {
 
-  def toDataSetIterator: DataSetIterator = ???  // new ListDataSetIterator(ds.toDataSet)
+  protected[model] def toDataSetIterator: DataSetIterator = ???  // new ListDataSetIterator(ds.toDataSet)
 
 }

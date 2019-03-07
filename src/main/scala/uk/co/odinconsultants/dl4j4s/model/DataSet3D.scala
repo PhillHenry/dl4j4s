@@ -15,7 +15,7 @@ class DataSet3D[T : Numeric, X <: Nat, Y <: Nat, Z <: Nat](val n: Int)
   private val features  = Nd4j.zeros(n: Int, nIn: Int, seriesLength: Int)
   private val labels    = Nd4j.zeros(n, nClasses, seriesLength)
 
-  protected def toDataSet: DataSet = ???
+  protected[model] def toDataSet: DataSet = ???
 
 }
 
