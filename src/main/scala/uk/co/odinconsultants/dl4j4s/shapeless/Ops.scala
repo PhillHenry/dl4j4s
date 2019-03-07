@@ -20,11 +20,8 @@ object Ops {
   object ToInt {
     def apply[N <: Nat](implicit toInt: ToInt[N]): ToInt[N] = toInt
 
-    implicit val toInt0: ToInt[_0] = new ToInt[_0] {
-      def apply() = 0
-    }
-    implicit def toIntSucc[N <: Nat](implicit toIntN : ToInt[N]): ToInt[Succ[N]] = new ToInt[Succ[N]] {
-      def apply(): Int = toIntN()+1
-    }
+    implicit val toInt0: ToInt[_0] = () => 0
+
+    implicit def toIntSucc[N <: Nat](implicit toIntN : ToInt[N]): ToInt[Succ[N]] = () => toIntN()+1
   }
 }
