@@ -15,12 +15,11 @@ import uk.co.odinconsultants.dl4j4s.shapeless.Ops._
 
 object NeuralNet3DBuilder {
 
-  def apply[T : Numeric, X <: Nat, Y <: Nat, Z <: Nat](implicit x: ToInt[X], y: ToInt[Y], z: ToInt[Z]) : NeuralNet3D[T, X, Y, Z] = {
+  def apply[T : Numeric, X <: Nat, Y <: Nat, Z <: Nat, H <: Nat](first: LayerBuilder[X, H], second: LayerBuilder[H, Z])(implicit x: ToInt[X], y: ToInt[Y], z: ToInt[Z]) : NeuralNet3D[T, X, Y, Z] = {
     val nIn:          Int = x.apply()
     val seriesLength: Int = y.apply()
     val nClasses:     Int = z.apply()
 
-    val nHidden = 20
     // TODO make all these other configs configurable
     val conf = new NeuralNetConfiguration.Builder()
       .seed(123)
@@ -29,9 +28,8 @@ object NeuralNet3DBuilder {
       .gradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue)
       .gradientNormalizationThreshold(0.5)
       .list()
-      .layer(0, new LSTM.Builder().activation(Activation.TANH).nIn(nIn).nOut(nHidden).build())
-      .layer(1, new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT)
-        .activation(Activation.SOFTMAX).nIn(nHidden).nOut(nClasses).lossFunction(new LossNegativeLogLikelihood(Nd4j.create(Array(0.005f, 1f)))).build())
+      .layer(0, first.build)
+      .layer(1, second.build)
       .build()
 
     val model = new MultiLayerNetwork(conf)
