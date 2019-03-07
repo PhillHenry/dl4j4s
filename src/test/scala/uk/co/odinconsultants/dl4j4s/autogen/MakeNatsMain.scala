@@ -4,7 +4,7 @@ import java.io.{FileWriter, PrintWriter}
 
 /**
   * Inspired by Miles Sabin's Shapeless library, this code will autogenerate types representing natural numbers.
-  * Sabin's library only has some 22 classes. This can generate any.
+  * Sabin's library only has some 22 classes. This can generate any number of them (within reason).
   */
 object MakeNatsMain {
 
